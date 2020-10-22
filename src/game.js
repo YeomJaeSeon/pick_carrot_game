@@ -1,5 +1,6 @@
 import { Field, ItemType } from "./field.js";
 import * as sound from "./sound.js";
+("use strict");
 
 export const Reason = Object.freeze({
   cancel: "cancel",
@@ -64,6 +65,7 @@ class Game {
     } else if (item === ItemType.bug) this.stop(Reason.lose);
   };
   startGame() {
+    // this.gameField.move();
     sound.stopBg();
     sound.playBg();
     this.started = true;
@@ -74,6 +76,7 @@ class Game {
     this.startGameTimer();
   }
   stop(reason) {
+    this.gameField.moveStop();
     sound.stopBg();
     this.started = false;
 
