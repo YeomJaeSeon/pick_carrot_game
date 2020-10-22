@@ -6,3 +6,6 @@
 ## 추가한 기능
 - 벌레의 움직임   
 - 레벨에 따른 벌레의 개수와 당근의 개수의 증가  
+
+## deploy
+https://yeomjaeseon.github.io/pick_carrot_game/
