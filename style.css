@@ -6,7 +6,8 @@ body{
     margin:0;
     text-align: center;
     background-color:black;
-    padding-top : 100px;
+    margin-top : 30px;
+
 }
 button{
     border:none;
@@ -19,7 +20,6 @@ button:hover{
 .level{
     font-size:32px;
     color:white;
-    transform:translateY(-50px);
 }
 .game{
     display:flex;
@@ -29,6 +29,7 @@ button:hover{
     height: 500px;
     margin:auto;
     border-radius: 20px;
+    margin-top : 50px;
 
 }
 .game__header{
