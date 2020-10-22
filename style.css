@@ -2,8 +2,11 @@
     box-sizing: border-box;
 }
 body{
+    position: relative;
+    margin:0;
     text-align: center;
     background-color:black;
+    padding-top : 100px;
 }
 button{
     border:none;
@@ -12,6 +15,11 @@ button{
 }
 button:hover{
     transform:scale(1.1);
+}
+.level{
+    font-size:32px;
+    color:white;
+    transform:translateY(-50px);
 }
 .game{
     display:flex;
@@ -72,7 +80,7 @@ button:hover{
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
     margin:auto;
-    transform:translateY(-150%);
+    transform :translateY(-150%);
     padding:10px;
 }
 .popup--hide{

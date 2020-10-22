@@ -2,6 +2,7 @@ import * as sound from "./sound.js";
 
 ("use strict");
 const ITEM_SIZE = 80;
+const MOVE_DURATION = 500;
 
 export const ItemType = Object.freeze({
   carrot: "carrot",
@@ -9,10 +10,11 @@ export const ItemType = Object.freeze({
 });
 
 export class Field {
-  constructor(carrotCount, bugCount, isGameRunning) {
+  constructor(carrotCount, bugCount, isGameRunning, level) {
     this.carrotCount = carrotCount;
     this.bugCount = bugCount;
     this.isGameRunning = isGameRunning;
+    this.level = level;
 
     this.field = document.querySelector(".game__field");
     this.fieldRect = this.field.getBoundingClientRect();
@@ -40,8 +42,8 @@ export class Field {
   };
   init() {
     this.field.innerHTML = "";
-    this.addItem("carrot", this.carrotCount, "./img/carrot.png");
-    this.addItem("bug", this.bugCount, "./img/bug.png");
+    this.addItem("carrot", this.carrotCount * this.level(), "./img/carrot.png");
+    this.addItem("bug", this.bugCount * this.level(), "./img/bug.png");
     this.move();
   }
   addItem(className, count, imgPath) {
@@ -70,7 +72,7 @@ export class Field {
         bug.style.left = `${x}px`;
         bug.style.top = `${y}px`;
       });
-    }, 500);
+    }, MOVE_DURATION);
   }
   moveStop() {
     clearInterval(this.timer);

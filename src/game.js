@@ -34,6 +34,7 @@ class Game {
     this.gameBtn = document.querySelector(".game__button");
     this.gameTimer = document.querySelector(".game__timer");
     this.gameScore = document.querySelector(".game__score");
+    this.levelBoard = document.querySelector(".level");
 
     this.gameBtn.addEventListener("click", () => {
       if (!this.started) {
@@ -46,11 +47,13 @@ class Game {
     this.started = false;
     this.score = 0;
     this.timer = undefined;
+    this.level = 1;
 
     this.gameField = new Field(
       this.carrotCount,
       this.bugCount,
-      () => this.started
+      () => this.started,
+      () => this.level
     );
     this.gameField.setStopListener(this.onFieldGame);
   }
@@ -61,11 +64,22 @@ class Game {
     ++this.score;
     this.upDateScore();
     if (item === ItemType.carrot) {
-      if (this.carrotCount === this.score) this.stop(Reason.win);
-    } else if (item === ItemType.bug) this.stop(Reason.lose);
+      if (this.carrotCount * this.level === this.score) {
+        this.win();
+      }
+    } else if (item === ItemType.bug) {
+      this.lose();
+    }
   };
+  win() {
+    this.stop(Reason.win);
+    this.level++;
+  }
+  lose() {
+    this.stop(Reason.lose);
+    this.level = 1;
+  }
   startGame() {
-    // this.gameField.move();
     sound.stopBg();
     sound.playBg();
     this.started = true;
@@ -104,7 +118,7 @@ class Game {
       this.upDateTimer(--remainTimes);
       if (remainTimes <= 0) {
         this.stopGameTimer();
-        this.stop(this.carrotCount === this.score ? Reason.win : Reason.lose);
+        this.carrotCount * this.level === this.score ? this.win() : this.lose();
       }
     }, 1000);
   }
@@ -123,11 +137,15 @@ class Game {
     this.gameScore.style.visibility = "visible";
   }
   init() {
+    this.upDateLevel();
     this.score = 0;
-    this.gameScore.innerText = this.carrotCount;
+    this.gameScore.innerText = this.carrotCount * this.level;
     this.gameField.init();
   }
+  upDateLevel() {
+    this.levelBoard.innerText = `LEVEL ${this.level}`;
+  }
   upDateScore() {
-    this.gameScore.innerText = this.carrotCount - this.score;
+    this.gameScore.innerText = this.carrotCount * this.level - this.score;
   }
 }
