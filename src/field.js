@@ -22,6 +22,9 @@ export class Field {
     this.x2 = this.fieldRect.width - ITEM_SIZE;
     this.y2 = this.fieldRect.height - ITEM_SIZE;
 
+    this.x = 0;
+    this.y = 0;
+
     this.field.addEventListener("click", this.onFieldGame);
 
     this.timer = undefined;
@@ -54,11 +57,11 @@ export class Field {
       const img = document.createElement("img");
       img.setAttribute("class", className);
       img.setAttribute("src", imgPath);
-      const x = getRandom(x1, this.x2);
-      const y = getRandom(y1, this.y2);
+      this.x = getRandom(x1, this.x2);
+      this.y = getRandom(y1, this.y2);
       img.style.position = "absolute";
-      img.style.left = `${x}px`;
-      img.style.top = `${y}px`;
+      img.style.left = `${this.x}px`;
+      img.style.top = `${this.y}px`;
 
       this.field.appendChild(img);
     }
@@ -67,10 +70,24 @@ export class Field {
     const bugs = document.querySelectorAll(".bug");
     this.timer = setInterval(() => {
       bugs.forEach((bug) => {
-        const x = getRandom(0, this.x2);
-        const y = getRandom(0, this.y2);
-        bug.style.left = `${x}px`;
-        bug.style.top = `${y}px`;
+        const x = getRandomMove(-1, 1);
+        const y = getRandomMove(-1, 1);
+        const bugX = bug.style.top;
+        const bugY = bug.style.left;
+        const newX = bugX + x;
+        const newY = bugY + y;
+
+        bug.style.transform = `translateX(${x}px) translateY(${y}px)`;
+        // bug.style.transform = `translateY(${y}px)`;
+
+        // bug.style.left = `${newX}px`;
+        // bug.style.top = `${newY}px`;
+        // bug.style.transition = `transform 300ms ease`;
+        // bug.style.
+        // bug.style.transform = `translateX(${x}px)`;
+
+        // bug.style.transform = `translateY(${y}px)`;
+        //bug.style.transform = `translate(${x}px, ${y}px);`;
       });
     }, MOVE_DURATION);
   }
@@ -81,4 +98,7 @@ export class Field {
 
 function getRandom(min, max) {
   return Math.random() * (max - min) + min;
+}
+function getRandomMove(min, max) {
+  return (Math.floor(Math.random() * (max - min + 1)) + min) * 10;
 }

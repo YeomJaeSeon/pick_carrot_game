@@ -80,6 +80,7 @@ button:hover{
     height:150px;
     background-color: rgba(0, 0, 0, 0.5);
     color:white;
+    border-radius: 20px;
     margin:auto;
     transform :translateY(-150%);
     padding:10px;
