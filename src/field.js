@@ -2,7 +2,7 @@ import * as sound from "./sound.js";
 
 ("use strict");
 const ITEM_SIZE = 80;
-const MOVE_DURATION = 2000;
+const MOVE_DURATION = 500;
 
 export const ItemType = Object.freeze({
   carrot: "carrot",
@@ -68,17 +68,33 @@ export class Field {
   }
   move() {
     const bugs = document.querySelectorAll(".bug");
+
     this.timer = setInterval(() => {
       bugs.forEach((bug) => {
-        const x = getRandom(0, this.x2);
-        const y = getRandom(0, this.y2);
+        const x = getRandom(-50, 50);
+        const y = getRandom(-50, 50);
+
         bug.style.transition = "all 2000ms ease";
 
-        bug.style.left = `${x}px`;
-        bug.style.top = `${y}px`;
+        let newX = parseFloat(bug.style.left);
+        newX += x;
+
+        // field범위넘어가면안됨.
+        if (newX > 0 && newX < this.x2) {
+          bug.style.left = `${newX}px`;
+        }
+
+        let newY = parseFloat(bug.style.top);
+        newY += y;
+
+        // field범위넘어가면안됨.
+        if (newY > 0 && newY < this.y2) {
+          bug.style.top = `${newY}px`;
+        }
       });
     }, MOVE_DURATION);
   }
+
   moveStop() {
     clearInterval(this.timer);
   }

@@ -61,9 +61,9 @@ class Game {
     this.onStop = onStop;
   }
   onFieldGame = (item) => {
-    ++this.score;
-    this.upDateScore();
     if (item === ItemType.carrot) {
+      ++this.score;
+      this.upDateScore();
       if (this.carrotCount * this.level === this.score) {
         this.win();
       }
